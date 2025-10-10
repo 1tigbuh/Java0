@@ -1,27 +1,24 @@
 package app;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        String product1 = "smartphone";
-        int quantity1 = 64;
-        double price1 = 350.00;
-        int days1 = 5;
-        double total1 = quantity1 * price1;
-        double average1 = total1 / days1;
+        Scanner scanner = new Scanner(System.in);
 
-        String product2 = "laptop";
-        int quantity2 = 16;
-        double price2 = 260.00;
-        int days2 = 7;
-        double total2 = quantity2 * price2;
-        double average2 = total2 / days2;
+        System.out.print("Сума доходу: ");
+        double income = scanner.nextDouble();
+        double tax;
 
-        System.out.printf("Product No 1: %s,%n", product1);
-        System.out.printf("total sales for %d days is EUR %.2f,%n", days1, total1);
-        System.out.printf("sales by day is EUR %.2f.%n", average1);
+        if (income <= 10000) {
+            tax = income * 0.025;
+        } else if (income <= 25000) {
+            tax = income * 0.043;
+        } else {
+            tax = income * 0.067;
+        }
 
-        System.out.printf("Product No 2: %s,%n", product2);
-        System.out.printf("total sales for %d days is EUR %.2f,%n", days2, total2);
-        System.out.printf("sales by day is EUR %.2f.%n", average2);
+        System.out.printf("Сума податку: %.2f грн%n", tax);
+        scanner.close();
     }
 }
