@@ -1,24 +1,17 @@
-package app;
 
-import java.util.Scanner;
+package app;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        int sum = 0;
+        int total = 0;
 
-        System.out.print("Сума доходу: ");
-        double income = scanner.nextDouble();
-        double tax;
-
-        if (income <= 10000) {
-            tax = income * 0.025;
-        } else if (income <= 25000) {
-            tax = income * 0.043;
-        } else {
-            tax = income * 0.067;
+        for (int i = 1; i <= 6; i++) {
+            sum += i;
+            System.out.println(i + ") Num is " + i + ", sum is " + sum);
+            total = sum;
         }
-
-        System.out.printf("Сума податку: %.2f грн%n", tax);
-        scanner.close();
+        System.out.println("------------------------");
+        System.out.println("Sum of numbers is " + total);
     }
 }
