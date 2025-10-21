@@ -1,64 +1,64 @@
-
 package app;
+
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {34, -10, 56, -22, 78, 5, 7, -15, 42, -30, 91, 0, -50, 18, 99, -3, 25, 11, 63, -8};
+        int[] array = new int[15];
+        Random random = new Random();
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Елементи масиву: [");
-        for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i]);
-            if (i < arr.length - 1) System.out.print(", ");
+        for (int i = 0; i < array.length; i++) {
+            array[i] = random.nextInt(100) + 1;
         }
-        System.out.println("]");
+        System.out.println("Початковий вигляд масиву: " + Arrays.toString(array));
+        InsertionSort(array);
+        System.out.println("Відсортований масив: " + Arrays.toString(array));
+        System.out.print("Введіть число для пошуку: ");
 
-        int sumofNegatives = 0;
-        for (int num : arr) {
-            if (num < 0) sumofNegatives += num;
-        }
-        System.out.println("Сума від'ємних чисел: " + sumofNegatives);
-        int even = 0, odd = 0;
-        for (int num : arr) {
-            if (num % 2 == 0) even++;
-            else odd++;
-        }
-        System.out.println("Кількість парних чисел: " + even);
-        System.out.println("Кількість непарних чисел: " + odd);
+        int tar = scanner.nextInt();
 
-        int min = arr[0], max = arr[0];
-        int minIndex = 0, maxIndex = 0;
-
-        for (int i = 1; i < arr.length; i++) {
-            if (arr[i] < min) {
-                min = arr[i];
-                minIndex = i;
-            }
-            if (arr[i] > max) {
-                max = arr[i];
-                maxIndex = i;
-            }
-        }
-
-        System.out.println("Найменший елемент: " + min + " (з індексом " + minIndex + ")");
-        System.out.println("Найбільший елемент: " + max + " (з індексом " + maxIndex + ")");
-        int firstNegative = -1;
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] < 0) {
-                firstNegative = i;
-                break;
-            }
-        }
-        if (firstNegative == -1 || firstNegative == arr.length - 1) {
-            System.out.println("Від'ємних чисел немає або після них немає елементів.");
+        int index = Search(array, tar);
+        if (index != -1) {
+            System.out.println("Індекс числа " + tar + " у відсортованому масиві: " + index);
         } else {
-            int sum = 0;
-            int count = 0;
-            for (int i = firstNegative + 1; i < arr.length; i++) {
-                sum += arr[i];
-                count++;
-            }
-            double average = (double) sum / count;
-            System.out.printf("Середнє арифметичне чисел після першого від'ємного числа: %.2f\n", average);
+            System.out.println("Числа " + tar + " немає.");
         }
+
+        scanner.close();
+    }
+
+
+    public static void InsertionSort(int[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            int n = arr[i];
+            int j = i - 1;
+
+            while (j >= 0 && arr[j] > n) {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            arr[j + 1] = n;
+        }
+    }
+
+
+    public static int Search(int[] arr, int target) {
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (arr[mid] == target) {
+                return mid;
+            } else if (arr[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return -1;
     }
 }
