@@ -1,64 +1,69 @@
 package app;
 
-import java.util.Arrays;
 import java.util.Random;
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
-        int[] array = new int[15];
-        Random random = new Random();
-        Scanner scanner = new Scanner(System.in);
+        int[][] matrix = new int[4][4];
+        Random rand = new Random();
 
-        for (int i = 0; i < array.length; i++) {
-            array[i] = random.nextInt(100) + 1;
-        }
-        System.out.println("Початковий вигляд масиву: " + Arrays.toString(array));
-        InsertionSort(array);
-        System.out.println("Відсортований масив: " + Arrays.toString(array));
-        System.out.print("Введіть число для пошуку: ");
-
-        int tar = scanner.nextInt();
-
-        int index = Search(array, tar);
-        if (index != -1) {
-            System.out.println("Індекс числа " + tar + " у відсортованому масиві: " + index);
-        } else {
-            System.out.println("Числа " + tar + " немає.");
-        }
-
-        scanner.close();
-    }
-
-
-    public static void InsertionSort(int[] arr) {
-        for (int i = 1; i < arr.length; i++) {
-            int n = arr[i];
-            int j = i - 1;
-
-            while (j >= 0 && arr[j] > n) {
-                arr[j + 1] = arr[j];
-                j--;
-            }
-            arr[j + 1] = n;
-        }
-    }
-
-
-    public static int Search(int[] arr, int target) {
-        int left = 0;
-        int right = arr.length - 1;
-
-        while (left <= right) {
-            int mid = (left + right) / 2;
-            if (arr[mid] == target) {
-                return mid;
-            } else if (arr[mid] < target) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                matrix[i][j] = rand.nextInt(50) + 1;
             }
         }
-        return -1;
+        for (int i = 0; i < 4;i++) {
+            for (int j = 0; j < 4; j++) {
+                System.out.printf("%3d ", matrix[i][j]);
+            }
+            System.out.println();
+        }
+        int evenrows = 0;
+        int oddrows = 0;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (i % 2 == 0) evenrows += matrix[i][j];
+                else oddrows += matrix[i][j];
+            }
+        }
+        long evencols = 1;
+        long oddcols = 1;
+        for (int j = 0;j < 4; j++) {
+            for (int i = 0; i < 4; i++) {
+                if (j % 2 == 0) evencols *= matrix[i][j];
+                else oddcols *= matrix[i][j];
+            }
+        }
+
+        System.out.println("Сума парних рядків: " + evenrows);
+        System.out.println("Сума непарних рядків: " + oddrows);
+        System.out.println("Добуток парних стовпців: " + evencols);
+        System.out.println("Добуток непарних стовпців: " + oddcols);
+
+        int magsum = 0;
+        for (int j = 0; j < 4; j++) {
+            magsum += matrix[0][j];
+        }
+        boolean magic = true;
+        for (int i = 1; i < 4 && magic; i++) {
+            int rowsum = 0;
+            for (int j = 0; j < 4; j++) rowsum += matrix[i][j];
+            if (rowsum != magsum) magic = false;
+        }
+        for (int j = 0; j < 4 && magic; j++) {
+            int sumcol = 0;
+            for (int i = 0; i < 4; i++) sumcol += matrix[i][j];
+            if (sumcol != magsum) magic = false;
+        }
+        int diag1 = 0, diag2 = 0;
+        for (int i = 0; i < 4; i++) {
+            diag1 += matrix[i][i];
+            diag2 += matrix[i][3 - i];
+        }
+        if (diag1 != magsum || diag2 != magsum) magic = false;
+
+        if (magic)
+            System.out.println("Матриця є магічним квадратом.");
+        else
+            System.out.println("Матриця не є магічним квадратом.");
     }
 }
