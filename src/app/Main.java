@@ -2,21 +2,16 @@ package app;
 
 public class Main {
     public static void main(String[] args) {
-        Shape[] shapes = {
-                new Circle(2),
-                new Triangle(5, 5),
-                new Square(10)
-        };
+        MsgPrint printer = new MsgPrint();
 
-        double totalArea = calculateTotal(shapes);
-        System.out.println("Total Area: " + totalArea);
-    }
+        MsgPrint.Msg msg1 = new MsgPrint.Msg("Привіт", "Валера");
 
-    public static double calculateTotal(Shape[] shapes) {
-        double sum = 0;
-        for (Shape shape : shapes) {
-            sum += shape.getArea();
-        }
-        return sum;
+        MsgPrint.Msg msg2 = new MsgPrint.Msg("Добрий день", null);
+
+        MsgPrint.Msg msg3 = new MsgPrint.Msg(null, null);
+
+        printer.print(msg1);
+        printer.print(msg2);
+        printer.print(msg3);
     }
 }
